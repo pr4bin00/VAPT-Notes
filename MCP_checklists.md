@@ -44,9 +44,10 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 ```text
 [ AI Client ] -----Performs Oauth intially──────( Dynamic OAuth JWT with EVERY request )──────────────► [ HackerOne Gateway & GraphQL ]
-    Or (curl)                        [Cryptographically validates signature & claims]              (Core Production Platform)
-
-```curl -s -X POST https://hackerone.com/mcp \
+ Or (curl)                                    [Cryptographically validates signature & claims]              (Core Production Platform)
+```
+```
+curl -s -X POST https://hackerone.com/mcp \
   -H "Authorization: Bearer <YOUR_OAUTH_JWT_TOKEN>" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
 ```
