@@ -1,9 +1,3 @@
-# MCP Integration Security Testing Checklist
-
-This checklist contains generalized commands for validating Model Context Protocol (MCP) implementations against standard API and injection vulnerabilities.
-
----
-
 # Model Context Protocol (MCP) Architectural Scenarios Reference
 
 Use this reference to identify the deployment topology of a target MCP implementation and align your VAPT test vectors to the correct security boundaries.
@@ -67,17 +61,13 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 > **Important Cross-Reference for Your Notes:**
 > 
-> * **Your Current Repo Checklist (`MCP_checklists.md`):** This maps strictly to **Scenario 2 (Managed Proxy Gateway)**. It assumes you are issuing an `initialize` request with a static platform `X-API-Key` to generate a stateful backend `mcp-session-id` which hides the downstream OAuth mechanics from your script.
+> * **This Current Repo Checklist (`MCP_checklists.md`):** This maps strictly to **Scenario 2 (Managed Proxy Gateway)**. It assumes you are issuing an `initialize` request with a static platform `X-API-Key` to generate a stateful backend `mcp-session-id` which hides the downstream OAuth mechanics from your script.
 > 
-> * **The HackerOne MCP Setup:** This maps strictly to **Scenario 3 (Direct Stateless Network)**. You do not use static keys or track a custom session ID. The `initialize` step is an architectural protocol formality; you must supply a cryptographically signed user-session OAuth Bearer token with every transaction.
+> * **The HackerOne MCP Setup:** This maps strictly to **Scenario 3 (Direct Stateless Network)**. You do not use static keys or track a custom session ID. The `initialize` step is an architectural protocol formality; you must supply a cryptographically signed user-session OAuth Bearer token performed initially with every transaction.
 
 ---
 
-## 📋 Direct Token Translation Matrix
-
-When moving from checklist tests from  **Scenario 2** templates to a **Scenario 3** network target like HackerOne, translate your execution headers using this template:
-
-
+## 📋 Scenario **2 exploit chain 
 
 ## 🛠️ Prerequisites & Session Handshake
 
