@@ -22,8 +22,8 @@ Use this reference to identify the deployment topology of a target MCP implement
 ### Scenario 2: Managed Proxy Gateway Deployment
 
 ```text
-[ Your Terminal ] ──( Static Key + Session ID )──► [ MCP Server Proxy ] ──( Invisible Backend OAuth )──► [ Downstream APIs ]
-     (curl)             [Validates user & handles token]       (Proxy holds master access)         (Internal Data)
+[ AI Client ] ──( Static Key + Session ID )──► [ MCP Server Proxy ] ──( Invisible Backend OAuth )──► [ Downstream APIs ]
+   Or  (curl)             [Validates user & handles token]       (Proxy holds master access)         (Internal Data)
 ```
 
 ```bash
@@ -43,8 +43,8 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 ### Scenario 3: Direct Stateless Network Deployment (e.g., HackerOne)
 
 ```text
-[ Your Terminal ] ──────────────( Dynamic OAuth JWT with EVERY request )──────────────► [ HackerOne Gateway & GraphQL ]
-     (curl)                        [Cryptographically validates signature & claims]              (Core Production Platform)
+[ AI Client ] -----Performs Oauth intially──────( Dynamic OAuth JWT with EVERY request )──────────────► [ HackerOne Gateway & GraphQL ]
+    Or (curl)                        [Cryptographically validates signature & claims]              (Core Production Platform)
 
 ```curl -s -X POST https://hackerone.com/mcp \
   -H "Authorization: Bearer <YOUR_OAUTH_JWT_TOKEN>" \
@@ -67,7 +67,7 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 ---
 
-## 📋 Scenario **2 exploit chain 
+## 📋 Scenario 2 exploit chain 
 
 ## 🛠️ Prerequisites & Session Handshake
 
