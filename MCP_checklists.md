@@ -4,6 +4,81 @@ This checklist contains generalized commands for validating Model Context Protoc
 
 ---
 
+# Model Context Protocol (MCP) Architectural Scenarios Reference
+
+Use this reference to identify the deployment topology of a target MCP implementation and align your VAPT test vectors to the correct security boundaries.
+
+---
+
+## 🛠️ The Three Core MCP Architectures
+
+### Scenario 1: Local Subprocess Deployment (`stdio`)
+
+```text
+[ AI Client ] ──( Launches local script / binary )──► [ Local MCP Server ]
+(Claude Code)          [ Communicates via stdin/stdout ]         (System commands)
+```
+
+* **Transport Method:** Standard Input/Output pipelines (`stdin` / `stdout`).
+* **Identity / State Layer:** **None.** It inherits the local operating system user context and host process permissions.
+* **Primary VAPT Focus:** **Host Escape & Argument Injection.** Testing if prompt payloads can force tool arguments to trigger local command injection, path traversal (`../../`), or unauthorized local file reads.
+
+---
+
+### Scenario 2: Managed Proxy Gateway Deployment
+
+```text
+[ Your Terminal ] ──( Static Key + Session ID )──► [ MCP Server Proxy ] ──( Invisible Backend OAuth )──► [ Downstream APIs ]
+     (curl)             [Validates user & handles token]       (Proxy holds master access)         (Internal Data)
+```
+
+```bash
+# SCENARIO 2 TEMPLATE (Your original notes)
+curl -s -X POST https://<TARGET_MCP_DOMAIN> \
+  -H "mcp-session-id: <SESSION_ID>" \
+  -H "X-API-Key: <YOUR_STATIC_API_KEY>" \
+  -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
+```
+
+* **Transport Method:** HTTP POST or Server-Sent Events (SSE).
+* **Identity / State Layer:** **Stateful.** Relies on persistent platform-scoped custom headers (`X-API-Key`) and temporary tracking identifiers (`mcp-session-id`) returned during the initial handshake.
+* **Primary VAPT Focus:** **Proxy Boundary Mapping & IDOR.** Testing if the proxy engine handles multi-tenant isolation correctly, or if it can be coerced into calling restricted backend routes using its master downstream access.
+
+---
+
+### Scenario 3: Direct Stateless Network Deployment (e.g., HackerOne)
+
+```text
+[ Your Terminal ] ──────────────( Dynamic OAuth JWT with EVERY request )──────────────► [ HackerOne Gateway & GraphQL ]
+     (curl)                        [Cryptographically validates signature & claims]              (Core Production Platform)
+
+```curl -s -X POST https://hackerone.com/mcp \
+  -H "Authorization: Bearer <YOUR_OAUTH_JWT_TOKEN>" \
+  -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
+```
+
+* **Transport Method:** Stateless Streamable HTTP.
+* **Identity / State Layer:** **Stateless.** Validated exclusively via dynamic, signed tokens (`Authorization: Bearer <JWT>`) passed in the HTTP header with every single request.
+* **Primary VAPT Focus:** **Token Integrity & Query Parameter Isolation.** Testing token validation limits (signature stripping, expired keys) and fuzzing input parameters directly against the underlying database engine's permission layers.
+
+---
+
+## 📌 Context Alignment Mapping
+
+> **Important Cross-Reference for Your Notes:**
+> 
+> * **Your Current Repo Checklist (`MCP_checklists.md`):** This maps strictly to **Scenario 2 (Managed Proxy Gateway)**. It assumes you are issuing an `initialize` request with a static platform `X-API-Key` to generate a stateful backend `mcp-session-id` which hides the downstream OAuth mechanics from your script.
+> 
+> * **The HackerOne MCP Setup:** This maps strictly to **Scenario 3 (Direct Stateless Network)**. You do not use static keys or track a custom session ID. The `initialize` step is an architectural protocol formality; you must supply a cryptographically signed user-session OAuth Bearer token with every transaction.
+
+---
+
+## 📋 Direct Token Translation Matrix
+
+When moving from checklist tests from  **Scenario 2** templates to a **Scenario 3** network target like HackerOne, translate your execution headers using this template:
+
+
+
 ## 🛠️ Prerequisites & Session Handshake
 
 Run the protocol initialization sequence to register a valid connection and extract a tracking token.
