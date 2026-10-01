@@ -68,9 +68,9 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 ---
 
-## 📋 Scenario 2 exploit chain 
+## 📋 Exploit checklists After getting Jwt token or static API key
 
-## 🛠️ Prerequisites & Session Handshake
+## 🛠️ Prerequisites & Session Handshake (mcp-session-id is optional and depends on server response headers on initialization)
 
 Run the protocol initialization sequence to register a valid connection and extract a session ID.
 
@@ -112,7 +112,7 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
   -H "mcp-session-id: <SESSION_ID>" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: <YOUR_VALID_API_KEY>" \
+  -H "X-API-Key: <YOUR_VALID_API_KEY>" \  or -H "Authorization: Bearer <YOUR_OAUTH_JWT_TOKEN>" \ 
   -d '{
     "jsonrpc": "2.0",
     "id": 10,
