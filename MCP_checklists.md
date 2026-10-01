@@ -29,7 +29,7 @@ Use this reference to identify the deployment topology of a target MCP implement
 ```bash
 # SCENARIO 2 TEMPLATE (Your original notes)
 curl -s -X POST https://<TARGET_MCP_DOMAIN> \
-  -H "mcp-session-id: <SESSION_ID>" \
+  -H "mcp-session-id: <SESSION_ID>" \   
   -H "X-API-Key: <YOUR_STATIC_API_KEY>" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
 ```
@@ -72,7 +72,7 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 ## 🛠️ Prerequisites & Session Handshake
 
-Run the protocol initialization sequence to register a valid connection and extract a tracking token.
+Run the protocol initialization sequence to register a valid connection and extract a session ID.
 
 ```bash
 # 1. Establish Session
