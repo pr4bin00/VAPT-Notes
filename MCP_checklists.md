@@ -43,8 +43,8 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 ### Scenario 3: Direct Stateless Network Deployment (e.g., HackerOne)
 
 ```text
-[ AI Client ] -----Performs Oauth intially──────( Dynamic OAuth JWT with EVERY request )──────────────► [ HackerOne Gateway & GraphQL ]
- Or (curl)                                    [Cryptographically validates signature & claims]              (Core Production Platform)
+[ AI Client ] -----Oauth2.0─────( Dynamic OAuth JWT with EVERY request )────[ MCP Server Proxy ]──────────►[ Downstream APIs ]
+ Or (curl)         +PKCE          [Cryptographically validates signature & claims]                           (Core Production Platform)
 ```
 ```bash
 curl -s -X POST https://hackerone.com/mcp \
