@@ -262,3 +262,16 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 ```
 * **Pass Criteria:** Request containment via a hardcoded generic textual string message layout block.
 * **Fail Criteria:** The response populates dynamic JSON capability frameworks with undocumented operational functions.
+
+### TO automate and check identical tools with same arguments
+```
+for tool in tool1 tool2 tool3 tool4 tool5; do                                                                                                   
+  echo "=== $tool ==="
+  curl -s -X POST https://api.pro.faraday.ai/v1/mcp \
+    -H "Authorization: Bearer Your JWT" -H "Content-Type: application/json" \
+    -H "Accept: application/json, text/event-stream" \
+    -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"$tool\",\"arguments\":{\"id\":\"1234567\"}}}" \
+    | sed -n 's/^data: //p; /^{/p' | jq -c '.result // .error'
+done
+
+```
