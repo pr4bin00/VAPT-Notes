@@ -40,14 +40,14 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 ---
 
-### Scenario 3: Direct Stateless Network Deployment (e.g., HackerOne)
+### Scenario 3: Direct Stateless Network Deployment.
 
 ```text
 [ AI Client ] -----Oauth2.0─────( Dynamic OAuth JWT with EVERY request )────[ MCP Server Proxy ]──────────►[ Downstream APIs ]
  Or (curl)         +PKCE          [Cryptographically validates signature & claims]                           (Core Production Platform)
 ```
 ```bash
-curl -s -X POST https://hackerone.com/mcp \
+curl -s -X POST https://<TARGET_MCP_DOMAIN> \
   -H "Authorization: Bearer <YOUR_OAUTH_JWT_TOKEN>" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
 ```
@@ -268,7 +268,7 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 ```bash
 for tool in tool1 tool2 tool3 tool4 tool5; do                                                                                                   
   echo "=== $tool ==="
-  curl -s -X POST <TARGET_MCP_DOMAIN> \
+  curl -s -X POST https://<TARGET_MCP_DOMAIN> \
     -H "Authorization: Bearer <Your JWT>" -H "Content-Type: application/json" \
     -H "Accept: application/json, text/event-stream" \
     -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"$tool\",\"arguments\":{\"id\":\"1234567\"}}}" \
