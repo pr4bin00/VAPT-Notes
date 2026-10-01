@@ -97,7 +97,7 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
   -H "X-API-Key: <YOUR_VALID_API_KEY>" \
-  -d '{"jsonrpc": "2.0", "id": 2, "method": "tools/list"}'
+  -d '{"jsonrpc": "2.0", "id": 2, "method": "tools/list"}' |  sed -n 's/^data: //p; /^{/p' | tee tools.json | jq -r '.result.tools[].name'
 ```
 
 ---
