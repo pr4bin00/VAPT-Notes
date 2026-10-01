@@ -78,7 +78,7 @@ Run the protocol initialization sequence to register a valid connection and extr
 curl -s -X POST https://<TARGET_MCP_DOMAIN> \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: <YOUR_VALID_API_KEY>" \
+  -H "X-API-Key: <YOUR_VALID_API_KEY>" \ or -H "Authorization: Bearer <YOUR_OAUTH_JWT_TOKEN>" \ 
   -d '{
     "jsonrpc": "2.0",
     "id": 1,
