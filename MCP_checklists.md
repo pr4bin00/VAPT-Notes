@@ -60,18 +60,23 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 ## 📌 Context Alignment Mapping
 
-> **Important Cross-Reference for Your Notes:**
+> **Important Cross-Reference the Your Notes:**
 > 
 > * **This Current Repo Checklist (`MCP_checklists.md`):** This maps strictly to **Scenario 2 (Managed Proxy Gateway)**. It assumes you are issuing an `initialize` request with a static platform `X-API-Key` to generate a stateful backend `mcp-session-id` which hides the downstream OAuth mechanics from your script.
 > 
 > * **The HackerOne MCP Setup:** This maps strictly to **Scenario 3 (Direct Stateless Network)**. You do not use static keys or track a custom session ID. The `initialize` step is an architectural protocol formality; you must supply a cryptographically signed user-session OAuth Bearer token performed initially with every transaction.
-
 ---
 
 ## 📋 Exploit checklists After getting Jwt token or static API key
 
 ## 🛠️ Prerequisites & Session Handshake 
 Run the protocol initialization sequence to register a valid connection and extract a session ID (mcp-session-id is optional and depends on server response headers during initialization).
+
+## If Dynamic client registration is allowed for Oauth.
+```bash
+ npx -y mcp-remote https://<mcp-domain>
+ cat .mcp-auth/mcp-remote-v1/xxxxxxxxxxxxxx_tokens.json
+```
 
 ```bash
 # 1. Establish Session
