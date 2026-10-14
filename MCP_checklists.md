@@ -60,7 +60,7 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 
 ## 📌 Context Alignment Mapping
 
-> **Important Cross-Reference the Your Notes:**
+> **Important Cross-Reference for the Notes:**
 > 
 > * **This Current Repo Checklist (`MCP_checklists.md`):** This maps strictly to **Scenario 2 (Managed Proxy Gateway)**. It assumes you are issuing an `initialize` request with a static platform `X-API-Key` to generate a stateful backend `mcp-session-id` which hides the downstream OAuth mechanics from your script.
 > 
