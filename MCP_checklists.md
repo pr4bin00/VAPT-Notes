@@ -72,7 +72,7 @@ curl -s -X POST https://<TARGET_MCP_DOMAIN> \
 ## 🛠️ Prerequisites & Session Handshake 
 Run the protocol initialization sequence to register a valid connection and extract a session ID (mcp-session-id is optional and depends on server response headers during initialization).
 
-## If Dynamic client registration is allowed for Oauth.
+### If Dynamic client registration is allowed for Oauth.
 ```bash
  npx -y mcp-remote https://<mcp-domain>
  cat .mcp-auth/mcp-remote-v1/xxxxxxxxxxxxxx_tokens.json
